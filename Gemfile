@@ -47,3 +47,5 @@ group :development, :test do
 end
 
 gem 'virtus', '~> 1.0.3'
+gem 'ratom'
+gem 'httparty'
