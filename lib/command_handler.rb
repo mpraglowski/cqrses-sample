@@ -4,7 +4,7 @@ module CommandHandler
   def with_aggregate(aggregate_id)
     aggregate = build(aggregate_id)
     yield aggregate
-    store(aggregate)
+    storage.append(stream_id(aggregate_id), aggregate.changes)
   end
 
   private
@@ -15,10 +15,6 @@ module CommandHandler
       aggregate.rebuild(events)
     end
     aggregate
-  end
-
-  def store(aggregate)
-    storage.append(stream_id(aggregate_id), aggregate.changes)
   end
 
   def load_events(aggregate_id)

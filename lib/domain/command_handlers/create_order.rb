@@ -1,11 +1,13 @@
 module Domain
   module CommandHandlers
     class CreateOrder
+      include Domain::ServicesInjector
       include CommandHandler
 
       def call(command)
         with_aggregate(command.aggregate_id) do |order|
-          order.create(command.order_number, command.customer_id)
+          order_number = number_generator.call
+          order.create(order_number, command.customer_id)
         end
       end
 

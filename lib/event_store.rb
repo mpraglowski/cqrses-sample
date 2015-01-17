@@ -29,6 +29,9 @@ class EventStore
                                read_event(entry.id))
     end
     events.reverse
+  rescue Atom::LoadError => e
+    return nil if e.response.code == '404'
+    raise
   end
 
   private
