@@ -10,10 +10,10 @@ module Domain
       @state = :draft
     end
 
-    def create(order_number, customer)
+    def create(order_number, customer_id)
       raise AlreadyCreated unless state == :draft
-      raise MissingCustomer unless customer
-      apply Events::OrderCreated.create(@id, order_number, customer.id)
+      raise MissingCustomer unless customer_id
+      apply Events::OrderCreated.create(@id, order_number, customer_id)
     end
 
     def expire
@@ -31,8 +31,8 @@ module Domain
     end
 
     def apply_order_created(event)
-      @customer_id = event[:customer_id]
-      @number = event[:order_number]
+      @customer_id = event.customer_id
+      @number = event.order_number
       @state = :created
     end
 
@@ -41,7 +41,7 @@ module Domain
     end
 
     def apply_item_added_to_basket(event)
-      product_id = event[:product_id]
+      product_id = event.product_id
       order_line = find_order_line(product_id)
       unless order_line
         order_line = create_order_line(product_id)
@@ -51,7 +51,7 @@ module Domain
     end
 
     def apply_item_removed_from_basket(event)
-      product_id = event[:product_id]
+      product_id = event.product_id
       order_line = find_order_line(product_id)
       return unless order_line
       order_line.decrease_quantity

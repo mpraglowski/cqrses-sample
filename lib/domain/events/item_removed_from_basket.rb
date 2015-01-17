@@ -1,13 +1,13 @@
 module Domain
   module Events
-    class ItemRemovedFromBasket < Event
-      def self.create(basket_id, product_id)
-        new({basket_id: basket_id, product_id: product_id})
-      end
+    class ItemRemovedFromBasket
+      include Virtus.model
 
-      private
-      def initialize(data)
-        super(data)
+      attribute :order_id, String
+      attribute :product_id, Integer
+
+      def self.create(order_id, product_id)
+        new({order_id: order_id, product_id: product_id})
       end
     end
   end
