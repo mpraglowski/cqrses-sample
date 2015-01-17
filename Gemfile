@@ -46,3 +46,4 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'virtus', '~> 1.0.3'
