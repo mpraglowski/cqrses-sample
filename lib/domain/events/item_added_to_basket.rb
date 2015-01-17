@@ -1,8 +1,8 @@
 module Domain
   module Events
     class ItemAddedToBasket < Event
-      def self.create(basket_id, product_id)
-        new({basket_id: basket_id, product_id: product_id})
+      def self.create(order_id, product_id)
+        new({order_id: order_id, product_id: product_id})
       end
 
       private

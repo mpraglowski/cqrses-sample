@@ -1,8 +1,8 @@
 module Domain
   module Events
     class OrderCreated < Event
-      def self.create(customer_id, basket_id)
-        new({customer_id: customer_id, basket_id: basket_id})
+      def self.create(order_id, order_number, customer_id)
+        new({order_id: order_id, order_number: order_number, customer_id: customer_id})
       end
 
       private
