@@ -1,20 +1,22 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Orders</h1>
+<h1>Orders</h1>
 
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>Number</th>
+      <th>Customer</th>
+      <th>State</th>
     </tr>
   </thead>
 
   <tbody>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to order.number, order %></td>
+        <td><%= order.customer %></td>
+        <td><%= order.state %></td>
       </tr>
     <% end %>
   </tbody>

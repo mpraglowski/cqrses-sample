@@ -15,11 +15,11 @@ module ReadModels
 
     private
     def find(order_uid, product_id)
-      OrderLine.where({order_uid: order_uid, product_id: product_id}).first
+      ::OrderLine.where({order_uid: order_uid, product_id: product_id}).first
     end
 
     def create(order_uid, product_id)
-      OrderLine.new.tap do |i|
+      ::OrderLine.new.tap do |i|
         i.order_uid = order_uid
         i.product_id = product_id
         i.product_name = Product.find(product_id).name

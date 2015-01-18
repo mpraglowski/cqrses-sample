@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  include CommandHandlers
 
   # GET /orders
   # GET /orders.json
@@ -10,65 +10,49 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    @order = Order.find(params[:id])
+    @order_lines = OrderLine.where(order_uid: @order.uid)
   end
 
   # GET /orders/new
   def new
-    @order = Order.new
+    @order_id = SecureRandom.uuid
+    @products = Product.all
+    @customers = Customer.all
   end
 
-  # GET /orders/1/edit
-  def edit
+  # POST /orders/:id/add_item
+  def add_item
+    cmd = Domain::Commands::AddItemToBasket.new(product_params)
+    execute(cmd)
+
+    head :ok
+  end
+
+  # POST /orders/:id/remove_item
+  def remove_item
+    cmd = Domain::Commands::RemoveItemFromBasket.new(product_params)
+    execute(cmd)
+
+    head :ok
   end
 
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(order_params)
+    cmd = Domain::Commands::CreateOrder.new(order_params)
+    execute(cmd)
 
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /orders/1
-  # PATCH/PUT /orders/1.json
-  def update
-    respond_to do |format|
-      if @order.update(order_params)
-        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
-        format.json { render :show, status: :ok, location: @order }
-      else
-        format.html { render :edit }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /orders/1
-  # DELETE /orders/1.json
-  def destroy
-    @order.destroy
-    respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to Order.find_by_uid(cmd.order_id), notice: 'Order was successfully created.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
+    def product_params
+      args = params.permit(:id, :product_id)
+      {order_id: args[:id], product_id: args[:product_id]}
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params[:order]
+      params.permit(:order_id, :customer_id)
     end
 end

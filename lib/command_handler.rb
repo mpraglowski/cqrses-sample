@@ -11,7 +11,7 @@ module CommandHandler
 
   private
   def build(aggregate_id)
-    aggregate = aggregate_class.new
+    aggregate = aggregate_class.new(aggregate_id)
     events = load_events(aggregate_id)
     if events.present?
       aggregate.rebuild(events)
