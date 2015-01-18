@@ -1,6 +1,6 @@
 module AggregateRoot
   def apply(event, new = true)
-    send "apply_#{event.class.name.demodulize.tableize.singularize}", event
+    send("apply_#{event.class.name.demodulize.tableize.singularize}", event)
     changes << event if new
   end
 

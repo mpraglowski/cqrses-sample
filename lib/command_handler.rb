@@ -1,10 +1,12 @@
 module CommandHandler
   include StorageInjector
+  include PublisherInjector
 
   def with_aggregate(aggregate_id)
     aggregate = build(aggregate_id)
     yield aggregate
     storage.append(stream_id(aggregate_id), aggregate.changes)
+    publish(aggregate.changes)
   end
 
   private
