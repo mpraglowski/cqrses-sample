@@ -1,3 +1,14 @@
+GIT
+  remote: git@github.com:arkency/http_eventstore.git
+  revision: 0de809fec1989fcf9a55a49b44002060c46af75d
+  specs:
+    http_eventstore (0.2.0)
+      activesupport
+      faraday
+      faraday_middleware
+      hashie
+      json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -66,8 +77,13 @@ GEM
     equalizer (0.0.9)
     erubis (2.7.0)
     execjs (2.2.2)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.9.1)
+      faraday (>= 0.7.4, < 0.10)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
+    hashie (3.4.0)
     hike (1.2.3)
     httparty (0.13.3)
       json (~> 1.8)
@@ -93,6 +109,7 @@ GEM
     minitest (5.5.1)
     multi_json (1.10.1)
     multi_xml (0.5.5)
+    multipart-post (2.0.0)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     pry (0.10.1)
@@ -180,6 +197,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
+  http_eventstore!
   httparty
   jbuilder (~> 2.0)
   jquery-rails
