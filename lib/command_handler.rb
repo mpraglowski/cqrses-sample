@@ -5,7 +5,7 @@ module CommandHandler
   def with_aggregate(aggregate_id)
     aggregate = build(aggregate_id)
     yield aggregate
-    storage.append(stream_id(aggregate_id), aggregate.changes)
+    store_events(aggregate_id, aggregate.changes)
     publish(aggregate.changes)
   end
 
@@ -17,13 +17,5 @@ module CommandHandler
       aggregate.rebuild(events)
     end
     aggregate
-  end
-
-  def load_events(aggregate_id)
-    storage.read(stream_id(aggregate_id))
-  end
-
-  def stream_id(aggregate_id)
-    "#{aggregate_class.to_s}$#{aggregate_id}"
   end
 end
