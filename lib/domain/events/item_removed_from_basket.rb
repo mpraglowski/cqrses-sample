@@ -2,8 +2,7 @@ require 'domain_event'
 
 module Domain
   module Events
-    class ItemRemovedFromBasket
-      include DomainEvent
+    class ItemRemovedFromBasket < DomainEvent
       include Virtus.model
 
       attribute :order_id, String

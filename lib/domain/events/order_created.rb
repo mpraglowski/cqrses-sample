@@ -2,8 +2,7 @@ require 'domain_event'
 
 module Domain
   module Events
-    class OrderCreated
-      include DomainEvent
+    class OrderCreated < DomainEvent
       include Virtus.model
 
       attribute :order_id, String
