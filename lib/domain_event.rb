@@ -1,7 +1,7 @@
 module DomainEvent
-  attr_reader :eventId, :version
+  attr_reader :event_id, :version
 
-  def eventType
+  def type
     self.class.to_s
   end
 
@@ -9,9 +9,9 @@ module DomainEvent
     self.to_hash
   end
 
-  def self.recreate(eventId, data, version)
+  def self.recreate(event_id, data, version)
     new(data) do |e|
-      e.eventId = eventId
+      e.event_id = event_id
       e.version = version
     end
   end
