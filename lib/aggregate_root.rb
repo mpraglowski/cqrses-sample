@@ -12,5 +12,8 @@ module AggregateRoot
     events.each do |event|
       apply(event, false)
     end
+    @version = events.last.version
   end
+
+  attr_reader :version
 end

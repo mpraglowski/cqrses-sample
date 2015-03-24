@@ -11,9 +11,9 @@ module StorageInjector
     nil
   end
 
-  def store_events(aggregate_id, events)
+  def store_events(aggregate_id, events, expected_version)
     events.each do |e|
-      storage.append_to_stream(stream_id(aggregate_id), e.eventType, e.data)
+      storage.append_to_stream(stream_id(aggregate_id), e.eventType, e.data, expected_version)
     end
   end
 

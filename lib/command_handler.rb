@@ -5,7 +5,7 @@ module CommandHandler
   def with_aggregate(aggregate_id)
     aggregate = build(aggregate_id)
     yield aggregate
-    store_events(aggregate_id, aggregate.changes)
+    store_events(aggregate_id, aggregate.changes, aggregate.version)
     publish(aggregate.changes)
   end
 
