@@ -1,6 +1,9 @@
+require 'domain_event'
+
 module Domain
   module Events
     class OrderExpired
+      include DomainEvent
       include Virtus.model
 
       attribute :order_id, String
