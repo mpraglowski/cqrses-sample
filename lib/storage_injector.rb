@@ -6,21 +6,19 @@ module StorageInjector
 
   def load_events(aggregate_id)
     storage.read_all_events_forward(stream_id(aggregate_id))
-      .map{|e| recreate_event(e.type, e.data)}
+      .map{|e| recreate_event(e)}
   rescue HttpEventstore::StreamNotExist
     nil
   end
 
   def store_events(aggregate_id, events)
     events.each do |e|
-      binding.pry
-      storage.append_to_stream(stream_id(aggregate_id), e.class.name, e)
+      storage.append_to_stream(stream_id(aggregate_id), e.eventType, e.data)
     end
   end
 
-  def recreate_event(type, data)
-      binding.pry
-    type.constantize.new(data) #JSON.parse(data).with_indifferent_access)
+  def recreate_event(event)
+    type.constantize.recreate(event.eventId, event.data, event.id)
   end
 
   def stream_id(aggregate_id)
