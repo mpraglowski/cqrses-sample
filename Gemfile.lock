@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:arkency/http_eventstore.git
-  revision: 79b373cb8073a38951539ed0e2b21ed993797091
+  revision: f2cb8065580a7c0076082f9e2dc086c54e8251c4
   specs:
     http_eventstore (0.2.0)
       faraday

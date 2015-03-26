@@ -1,7 +1,7 @@
 module StorageInjector
   private
   def storage
-    @storage ||= HttpEventstore::EventStoreConnection.new
+    @storage ||= HttpEventstore::Connection.new
   end
 
   def load_events(aggregate_id)
