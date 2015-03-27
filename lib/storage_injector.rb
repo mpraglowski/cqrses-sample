@@ -5,15 +5,14 @@ module StorageInjector
   end
 
   def load_events(aggregate_id)
-    storage.read_all_events_forward(stream_id(aggregate_id))
-      .map{|e| recreate_event(e)}
+    storage.read_all_events_forward(stream_id(aggregate_id)).map{|e| recreate_event(e)}
   rescue HttpEventstore::StreamNotFound
     nil
   end
 
   def store_events(aggregate_id, events, expected_version)
-    events.each do |e|
-      storage.append_to_stream(stream_id(aggregate_id), e.type, e.data, expected_version)
+    events.each do |event|
+      storage.append_to_stream(stream_id(aggregate_id), event, expected_version)
     end
   end
 

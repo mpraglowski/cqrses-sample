@@ -1,7 +1,7 @@
 class DomainEvent
   attr_accessor :event_id, :version
 
-  def type
+  def event_type
     self.class.to_s
   end
 
