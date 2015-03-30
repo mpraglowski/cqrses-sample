@@ -44,7 +44,5 @@ group :development, :test do
   gem "pry"
 end
 
-gem 'http_eventstore', git: 'git@github.com:arkency/http_eventstore.git'
+gem 'http_eventstore'
 gem 'virtus', '~> 1.0.3'
-gem 'ratom'
-gem 'httparty'
